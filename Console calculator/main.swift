@@ -20,23 +20,32 @@ let personalOperation: String? = readLine()
 
 //Предлагаем ввести первое целое число.
 print("Введите первое целое число:")
-let personalValueA = Int(readLine()!)!
+let personalValueA = readLine() ?? ""
 
 //Предлагаем ввести второе целое число.
 print("Введите второе целое число: ")
-let personalValueB = Int(readLine()!)!
+let personalValueB = readLine() ?? ""
 
 // Выводим выражение, которое получилось.
 print("Идет вычисление примера: \(personalValueA) \(personalOperation!) \(personalValueB)" )
 
-var resultValue: Any?
-
-switch personalOperation {
-    case "+": resultValue = personalValueA + personalValueB
-    case "-": resultValue = personalValueA - personalValueB
-    case "*": resultValue = personalValueA * personalValueB
-    case "/": resultValue = personalValueA / personalValueB
-    default: print("Ничего не получилось")
+//Пишем логику программы, обработку ошибок пользователя, вывод значения
+if let personalValueA = Int(personalValueA) {
+    if let personalValueB = Int(personalValueB) {
+        switch personalOperation {
+            case "+": print("Результат: " + String(personalValueA + personalValueB))
+            case "-": print("Результат: " + String(personalValueA - personalValueB))
+            case "*": print("Результат: " + String(personalValueA * personalValueB))
+            case "/": if personalValueB != 0 {
+                            print("Результат: " + String(personalValueA / personalValueB))
+                        } else {
+                            print("Делить на ноль нельзя!")
+                        }
+            default: print("Вы ввели неверную операцию.")
+        }
+    } else {
+        print("Вы ввели некорректное второе число.")
+    }
+} else {
+        print("Вы ввели некорректное первое число.")
 }
-// Выводим результат:
-print("Результат: \(resultValue as! Int)")
