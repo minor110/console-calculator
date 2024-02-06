@@ -12,40 +12,55 @@
 
 import Foundation
 
+// MARK: - Описание функций
+
+func getDataFromUser(description: String) -> String {
+    print(description)
+    return readLine() ?? ""
+}
+
+
+func showResult(_ result: Int) {
+    let result = String(result)
+    print("Результат: " + result )
+}
+
+
+func calculate(personalOperation: String, personalValueA: Int, personalValueB: Int) {
+    switch personalOperation {
+    case "+": showResult(personalValueA + personalValueB)
+    case "-": showResult(personalValueA - personalValueB)
+    case "*": showResult(personalValueA * personalValueB)
+    case "/": if personalValueB != 0 {
+                showResult(personalValueA / personalValueB)
+                } else {
+                    print("Делить на ноль нельзя!")
+                }
+    default: print("Вы ввели неверную операцию.")
+    }
+}
+
+
+// MARK: - Логика программы
+
 // Приветствуем пользователя и предлагаем выбрать необходимую операцию.
-print("Добро пожаловать в программу калькулятор. \nВыберите операцию: +, -, * или /.")
+print("Добро пожаловать в программу калькулятор.")
 
-//Пользователь вводит операцию.
-let personalOperation: String? = readLine()
-
-//Предлагаем ввести первое целое число.
-print("Введите первое целое число:")
-let personalValueA = readLine() ?? ""
-
-//Предлагаем ввести второе целое число.
-print("Введите второе целое число: ")
-let personalValueB = readLine() ?? ""
+//Пользователь вводит операцию. Предлагаем ввести первое и второе целое число.
+let personalOperation = getDataFromUser(description: "Выберите операцию: +, -, * или /." )
+let personalValueA = getDataFromUser(description: "Введите первое целое число:")
+let personalValueB = getDataFromUser(description: "Введите второе целое число:")
 
 // Выводим выражение, которое получилось.
-print("Идет вычисление примера: \(personalValueA) \(personalOperation!) \(personalValueB)" )
+print("Идет вычисление примера: \(personalValueA) \(personalOperation) \(personalValueB)" )
 
 //Пишем логику программы, обработку ошибок пользователя, вывод значения
 if let personalValueA = Int(personalValueA) {
     if let personalValueB = Int(personalValueB) {
-        switch personalOperation {
-            case "+": print("Результат: " + String(personalValueA + personalValueB))
-            case "-": print("Результат: " + String(personalValueA - personalValueB))
-            case "*": print("Результат: " + String(personalValueA * personalValueB))
-            case "/": if personalValueB != 0 {
-                            print("Результат: " + String(personalValueA / personalValueB))
-                        } else {
-                            print("Делить на ноль нельзя!")
-                        }
-            default: print("Вы ввели неверную операцию.")
-        }
+        calculate(personalOperation: personalOperation, personalValueA: personalValueA, personalValueB: personalValueB)
     } else {
         print("Вы ввели некорректное второе число.")
     }
 } else {
-        print("Вы ввели некорректное первое число.")
+    print("Вы ввели некорректное первое число.")
 }
