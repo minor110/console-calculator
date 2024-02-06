@@ -42,6 +42,7 @@
 		DF572DD62B720A0E00876D89 = {
 			isa = PBXGroup;
 			children = (
+				DF3EB2F52B7256E900A3F620 /* README.md */,
 				DF572DE12B720A0E00876D89 /* Console calculator */,
 				DF572DE02B720A0E00876D89 /* Products */,
 			);
@@ -59,7 +60,6 @@
 			isa = PBXGroup;
 			children = (
 				DF572DE22B720A0E00876D89 /* main.swift */,
-				DF3EB2F52B7256E900A3F620 /* README.md */,
 			);
 			path = "Console calculator";
 			sourceTree = "<group>";
