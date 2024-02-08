@@ -46,21 +46,32 @@ func calculate(personalOperation: String, personalValueA: Int, personalValueB: I
 // Приветствуем пользователя и предлагаем выбрать необходимую операцию.
 print("Добро пожаловать в программу калькулятор.")
 
-//Пользователь вводит операцию. Предлагаем ввести первое и второе целое число.
-let personalOperation = getDataFromUser(description: "Выберите операцию: +, -, * или /." )
-let personalValueA = getDataFromUser(description: "Введите первое целое число:")
-let personalValueB = getDataFromUser(description: "Введите второе целое число:")
-
-// Выводим выражение, которое получилось.
-print("Идет вычисление примера: \(personalValueA) \(personalOperation) \(personalValueB)" )
-
-//Пишем логику программы, обработку ошибок пользователя, вывод значения
-if let personalValueA = Int(personalValueA) {
-    if let personalValueB = Int(personalValueB) {
-        calculate(personalOperation: personalOperation, personalValueA: personalValueA, personalValueB: personalValueB)
-    } else {
-        print("Вы ввели некорректное второе число.")
+while true {
+    //Пользователь вводит операцию. Предлагаем ввести первое и второе целое число.
+    let personalOperation = getDataFromUser(description: "Выберите операцию: +, -, * или /. Для завершения роботы введите q")
+    
+    if personalOperation == "q" {
+        exit(0)
     }
-} else {
-    print("Вы ввели некорректное первое число.")
+    
+    let personalValueA = getDataFromUser(description: "Введите первое целое число:")
+    let personalValueB = getDataFromUser(description: "Введите второе целое число:")
+
+    // Выводим выражение, которое получилось.
+    print("Идет вычисление примера: \(personalValueA) \(personalOperation) \(personalValueB)" )
+
+    //Пишем логику программы, обработку ошибок пользователя, вывод значения
+    if let personalValueA = Int(personalValueA) {
+        if let personalValueB = Int(personalValueB) {
+            calculate(personalOperation: personalOperation, personalValueA: personalValueA, personalValueB: personalValueB)
+        } else {
+            print("Вы ввели некорректное второе число.")
+        }
+    } else {
+        print("Вы ввели некорректное первое число.")
+    }
+    
+    print("")
+    print("--------------------------------------")
+    print("")
 }
