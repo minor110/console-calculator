@@ -19,24 +19,61 @@ func getDataFromUser(description: String) -> String {
     return readLine() ?? ""
 }
 
+func calculcate() {
+    let operation = getDataFromUser(description: "Выберите операцию: +, -, * или /.")
+    guard operation == "+" || operation == "-" || operation == "*" || operation == "/" else  {
+    print("Вы ввели неверную операцию.")
+        return
+    }
+    
+    let firstNumber = getDataFromUser(description: "Введите первое число: ")
+    guard let firstNumber = Int(firstNumber) else {
+        print("Вы ввели неверное число.")
+        return
+    }
+    
+    let secondNumber = getDataFromUser(description: "Введите второе число: ")
+    guard let secondNumber = Int(secondNumber) else {
+        print("Вы ввели неверное число.")
+        return
+    }
+    
+    let example = String(firstNumber) + " " + operation + " " + String(secondNumber)
+    print("Идет вычисление примера: \(example)" )
+    
+    let result = calculate(personalOperation: operation, personalValueA: firstNumber, personalValueB: secondNumber)
+    guard let result = result else {
+        return
+    }
+    showResult(result)
+    history.append(example + " = " + String(result))
+}
 
 func showResult(_ result: Int) {
     let result = String(result)
     print("Результат: " + result )
 }
 
+//Вывод истории операций
+func showHistory() {
+    for example in history {
+        print(example)
+    }
+}
 
 func calculate(personalOperation: String, personalValueA: Int, personalValueB: Int) -> Int? {
     switch personalOperation {
-    case "+": return personalValueA + personalValueB
-    case "-": return personalValueA - personalValueB
-    case "*": return personalValueA * personalValueB
-    case "/": if personalValueB != 0 {
-                return personalValueA / personalValueB
-                } else {
-                    print("Делить на ноль нельзя!")
-                    return nil
-                }
+    case "+": 
+        return personalValueA + personalValueB
+    case "-": 
+        return personalValueA - personalValueB
+    case "*": 
+        return personalValueA * personalValueB
+    case "/" where personalValueB == 0: 
+        print("Делить на 0 нельзя!")
+        return nil
+    case "/":
+        return personalValueA / personalValueB
     default: print("Вы ввели неверную операцию.")
             return nil
     }
@@ -51,43 +88,18 @@ var history: [String] = []
 print("Добро пожаловать в программу калькулятор.")
 
 while true {
-    //Пользователь вводит операцию. Предлагаем ввести первое и второе целое число.
-    let personalOperation = getDataFromUser(description: "Выберите операцию: +, -, * или /. \nДля завершения роботы введите q \nДля просмотра истории введите h")
+    //Спрашиваем пользователя, что будем делать дальше.
+    let action = getDataFromUser(description: "Что вы хотите сделать? c - расчет примета, h - просмотр истории, q - завершение работы." )
     
-    //Выход из программы
-    if personalOperation == "q" {
+    switch action {
+    case "c":
+        calculcate()
+    case "h":
+        showHistory()
+    case "q":
         exit(0)
-    }else if personalOperation == "h" {
-        for example in history {
-            print(example)
-        }
-        continue
-    }
-    //Просмотр истории примеров
-    
-    
-    let personalValueA = getDataFromUser(description: "Введите первое целое число:")
-    let personalValueB = getDataFromUser(description: "Введите второе целое число:")
-    
-    //Храним пример пользователя
-    let example: String = personalValueA + " " + personalOperation + " " + personalValueB
-    
-    // Выводим выражение, которое получилось.
-    print("Идет вычисление примера: \(example)" )
-
-    //Пишем логику программы, обработку ошибок пользователя, вывод значения
-    if let personalValueA = Int(personalValueA) {
-        if let personalValueB = Int(personalValueB) {
-           let result = calculate(personalOperation: personalOperation, personalValueA: personalValueA, personalValueB: personalValueB)
-            if let result = result {
-                showResult(result)
-                history.append(example + " = " + String(result))
-            }
-        } else {
-            print("Вы ввели некорректное второе число.")
-        }
-    } else {
-        print("Вы ввели некорректное первое число.")
+    default:
+        print("Недопустимое действие.")
     }
     
     print("")
